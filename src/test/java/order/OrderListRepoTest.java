@@ -1,4 +1,7 @@
+package order;
+
 import org.junit.jupiter.api.Test;
+import product.Product;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

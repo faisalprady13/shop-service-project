@@ -1,3 +1,7 @@
+package order;
+
+import product.Product;
+
 import java.util.List;
 import java.util.UUID;
 
