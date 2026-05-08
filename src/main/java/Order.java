@@ -1,4 +1,8 @@
+import java.util.List;
 import java.util.UUID;
 
-public record Order(UUID id) {
+public record Order(UUID id, List<Product> products) {
+    public Order(List<Product> products) {
+        this(UUID.randomUUID(), products);
+    }
 }

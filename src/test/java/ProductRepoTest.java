@@ -17,10 +17,24 @@ public class ProductRepoTest {
         pr.add(product);
 
         assertEquals(1, pr.getProducts().size());
+        assertEquals(1, pr.getQuantites().size());
+        assertEquals(1, pr.retrieveQuantity(product.id()));
     }
 
     @Test
-    public void remove_shouldRemoveFromMap_whenGivenProductId() {
+    public void add_shouldAddMultipleProducts_whenGivenExistingProduct() {
+        ProductRepo pr = new ProductRepo();
+        Product product = new Product("Greatsword", new BigDecimal("250.5"));
+        pr.add(product);
+        pr.add(product);
+
+        assertEquals(1, pr.getProducts().size());
+        assertEquals(1, pr.getQuantites().size());
+        assertEquals(2, pr.retrieveQuantity(product.id()));
+    }
+
+    @Test
+    public void remove_shouldReduceAmount_whenGivenProductId() {
         ProductRepo pr = new ProductRepo();
         Product product = new Product("Greatsword", new BigDecimal("250.5"));
 
@@ -28,7 +42,7 @@ public class ProductRepoTest {
         pr.add(product);
         pr.remove(product.id());
 
-        assertEquals(0, pr.getProducts().size());
+        assertEquals(0, pr.retrieveQuantity(product.id()));
     }
 
     @Test
@@ -40,6 +54,18 @@ public class ProductRepoTest {
         pr.add(product);
 
         assertEquals(product, pr.retrieve(product.id()));
+    }
+
+
+    @Test
+    public void retrieveQuantity_shouldRetrieveFromMap_whenGivenProductId() {
+        ProductRepo pr = new ProductRepo();
+        Product product = new Product("Greatsword", new BigDecimal("250.5"));
+
+        //add product
+        pr.add(product);
+
+        assertEquals(1, pr.retrieveQuantity(product.id()));
     }
 
     @Test
@@ -55,5 +81,19 @@ public class ProductRepoTest {
 
         assertEquals(2, pr.retrieveAll().size());
         assertTrue(pr.retrieveAll().containsAll(expected));
+    }
+
+    @Test
+    public void itemCount_shouldReturnTotalCountOfProducts_whenCalled() {
+        ProductRepo pr = new ProductRepo();
+        Product product1 = new Product("Greatsword", new BigDecimal("250.5"));
+        Product product2 = new Product("Longsword", new BigDecimal("200"));
+
+        //add product
+        pr.add(product1);
+        pr.add(product2);
+        pr.add(product2);
+
+        assertEquals(3, pr.itemCount());
     }
 }
