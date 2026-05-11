@@ -1,6 +1,7 @@
 import order.Order;
 import order.OrderListRepo;
 import order.OrderMapRepo;
+import order.OrderRepo;
 import product.Product;
 import product.ProductRepo;
 
@@ -12,10 +13,10 @@ import java.util.UUID;
 
 public class ShopService {
     private final ProductRepo productRepo;
-    private final OrderMapRepo orderRepo;
+    private final OrderRepo orderRepo;
 
 
-    public ShopService(ProductRepo productRepo, OrderMapRepo orderMapRepo) {
+    public ShopService(ProductRepo productRepo, OrderRepo orderMapRepo) {
         this.productRepo = productRepo;
         this.orderRepo = orderMapRepo;
     }
