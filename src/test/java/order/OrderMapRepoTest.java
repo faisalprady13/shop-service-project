@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class OrderListRepoTest {
+class OrderMapRepoTest {
 
     Product product1 = new Product("Greatsword", new BigDecimal("250.5"));
     Product product2 = new Product("Longsword", new BigDecimal("200"));
 
     @Test
     void add_shouldAddToMap_whenGivenOrder() {
-        OrderListRepo or = new OrderListRepo();
+        OrderMapRepo or = new OrderMapRepo();
         List<Product> productList = new ArrayList<>(Arrays.asList(product1, product2));
 
         Order order1 = new Order(productList);
@@ -29,7 +29,7 @@ class OrderListRepoTest {
 
     @Test
     void remove_shouldRemoveFromMap_whenGivenId() {
-        OrderListRepo or = new OrderListRepo();
+        OrderMapRepo or = new OrderMapRepo();
         List<Product> productList = new ArrayList<>(Arrays.asList(product1, product2));
 
         Order order1 = new Order(productList);
@@ -44,7 +44,7 @@ class OrderListRepoTest {
 
     @Test
     void retrieveOrder_shouldReturnOrder_whenGivenId() {
-        OrderListRepo or = new OrderListRepo();
+        OrderMapRepo or = new OrderMapRepo();
         List<Product> productList = new ArrayList<>(Arrays.asList(product1, product2));
 
         Order order1 = new Order(productList);
@@ -57,7 +57,7 @@ class OrderListRepoTest {
 
     @Test
     void retrieveAll_shouldReturnAllOrders_whenCalled() {
-        OrderListRepo or = new OrderListRepo();
+        OrderMapRepo or = new OrderMapRepo();
         List<Product> productList = new ArrayList<>(Arrays.asList(product1, product2));
 
         Order order1 = new Order(productList);

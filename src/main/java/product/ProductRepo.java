@@ -21,7 +21,7 @@ public class ProductRepo {
     }
 
     public void add(Product product) {
-        Product found = this.retrieve(product.id());
+        Product found = products.get(product.id());
 
         if (found == null) {
             products.put(product.id(), product);
@@ -41,7 +41,13 @@ public class ProductRepo {
     }
 
     public Product retrieve(UUID id) {
-        return products.get(id);
+        Product found = products.get(id);
+        if (found != null) {
+            return found;
+        } else {
+            System.out.printf("item with id %s is not exist\n", id);
+            return null;
+        }
     }
 
     public int retrieveQuantity(UUID id) {

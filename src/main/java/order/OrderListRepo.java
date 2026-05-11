@@ -2,22 +2,32 @@ package order;
 
 import java.util.*;
 
-public class OrderListRepo {
-    private final Map<UUID, Order> orders = new HashMap<>();
+public class OrderListRepo implements OrderRepo {
+    private final List<Order> orders = new ArrayList<>();
 
     public void add(Order order) {
-        orders.put(order.id(), order);
+        orders.add(order);
     }
 
     public void remove(UUID id) {
-        this.orders.remove(id);
+        this.orders.removeIf(order -> order.id() == id);
+//        for (Order order : this.orders) {
+//            if (order.id() == id) {
+//                this.orders.remove(order);
+//            }
+//        }
     }
 
     public Order retrieveOrder(UUID id) {
-        return this.orders.get(id);
+        for (Order order : this.orders) {
+            if (order.id() == id) {
+                return order;
+            }
+        }
+        return null;
     }
 
     public List<Order> retrieveAll() {
-        return new ArrayList<>(this.orders.values());
+        return this.orders;
     }
 }
