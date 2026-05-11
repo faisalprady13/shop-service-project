@@ -55,4 +55,15 @@ public class ShopService {
         }
         return null;
     }
+
+    public void listProduct() {
+        List<Product> products = productRepo.retrieveAll();
+        int totalQuantity = productRepo.itemCount();
+        System.out.printf("%d type(s) of items. total quantity: %d items\n", products.size(), totalQuantity);
+        for (Product product : products) {
+            int quantity = productRepo.retrieveQuantity(product.id());
+            System.out.printf("- %s, price: %s, quantity: %d (%s)\n", product.name(), product.price(), quantity,
+                    product.id());
+        }
+    }
 }
