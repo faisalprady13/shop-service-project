@@ -1,8 +1,10 @@
 import order.Order;
 import order.OrderListRepo;
+import order.OrderMapRepo;
 import product.Product;
 import product.ProductRepo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,12 +12,12 @@ import java.util.UUID;
 
 public class ShopService {
     private final ProductRepo productRepo;
-    private final OrderListRepo orderRepo;
+    private final OrderMapRepo orderRepo;
 
 
-    public ShopService(ProductRepo productRepo, OrderListRepo orderListRepo) {
+    public ShopService(ProductRepo productRepo, OrderMapRepo orderMapRepo) {
         this.productRepo = productRepo;
-        this.orderRepo = orderListRepo;
+        this.orderRepo = orderMapRepo;
     }
 
 
@@ -23,7 +25,8 @@ public class ShopService {
         List<Product> productList = new ArrayList<>();
         for (UUID id : ids) {
             Product found = this.productRepo.retrieve(id);
-            if (found == null) {
+            int foundQuantity = this.productRepo.retrieveQuantity(id);
+            if (found == null || foundQuantity <= 0) {
                 return null;
             }
             productList.add(found);
@@ -32,5 +35,24 @@ public class ShopService {
         Order order = new Order(productList);
         this.orderRepo.add(order);
         return order;
+    }
+
+    public BigDecimal totalSum(UUID orderId) {
+        Order order = this.orderRepo.retrieveOrder(orderId);
+        BigDecimal sum = new BigDecimal(0);
+        for (Product product : order.products()) {
+            sum = sum.add(product.price());
+        }
+
+        return sum;
+    }
+
+    public Order changeOrder(UUID oldOrderId, UUID[] newProductIds) {
+        Order newOrder = placeOrder(newProductIds);
+        if (newOrder != null) {
+            orderRepo.remove(oldOrderId);
+            return newOrder;
+        }
+        return null;
     }
 }

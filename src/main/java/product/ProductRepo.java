@@ -37,6 +37,9 @@ public class ProductRepo {
 
         if (quantity > 0) {
             quantites.put(id, quantity - 1);
+        } else {
+            this.quantites.remove(id);
+            this.products.remove(id);
         }
     }
 
@@ -51,7 +54,7 @@ public class ProductRepo {
     }
 
     public int retrieveQuantity(UUID id) {
-        return quantites.get(id);
+        return quantites.get(id) != null ? quantites.get(id) : 0;
     }
 
     public List<Product> retrieveAll() {
